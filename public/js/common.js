@@ -52,4 +52,16 @@ define(['jquery', 'template', 'cookie'], function($, template) {
       }
     });
   });
+
+  /*// 因为每一个页面中都需要用到该方法，所以，需要创建一个工具模块
+  // 这个模块中，用来存放所有页面共用的一些方法！
+  // 左侧菜单的高亮处理
+  var setMenuClass = function( path ) {
+    var $aLink = $('.navs a[href="' + path + '"]');
+    $aLink.addClass('active');
+    // 将其兄弟元素移除样式
+    $aLink.parent().siblings().children('a').removeClass('active')
+  };
+  
+  setMenuClass('/teacher/list');*/
 });

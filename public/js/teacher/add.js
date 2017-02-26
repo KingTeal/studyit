@@ -1,4 +1,7 @@
-define(['jquery', 'template'], function($, template) {
+define(['jquery', 'template', 'utils'], function($, template, utils) {
+
+	utils.setMenuClass('/teacher/list');
+
 	// 根据url中有没有 tc_id 参数来确定是编辑还是添加！
 	// 怎么获取到 url 中的参数？？？
 	// console.log(location)

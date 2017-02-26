@@ -7,11 +7,15 @@ require.config({
 		cookie: 'assets/jquery-cookie/jquery.cookie',
 		template: 'assets/artTemplate/template',
 
-		common: 'js/common'
+		common: 'js/common',
+		utils: 'js/utils'
 	},
 	shim: {
 		// 因为 bootstrap 需要依赖与jQuery才能使用，所以，需要配置依赖项
 		bootstrap: {
+			deps: ['jquery']
+		},
+		utils: {
 			deps: ['jquery']
 		}
 	}

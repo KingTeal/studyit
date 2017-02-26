@@ -1,4 +1,7 @@
-define(['jquery', 'template', 'bootstrap'], function($, template) {
+define(['jquery', 'template', 'utils', 'bootstrap'], function($, template, utils) {
+	// 设置菜单高亮
+	utils.setMenuClass('/teacher/list');
+
 	var $teacher_list = $('#teacher_list');
 
 	// 1 实现讲师列表
