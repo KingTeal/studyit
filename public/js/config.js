@@ -2,11 +2,18 @@ require.config({
 	baseUrl: '/public',
 	paths: {
 		jquery: 'assets/jquery/jquery.min',
-		bootstrap: 'assets/bootstrap/js/bootstrap.min.js',
+		bootstrap: 'assets/bootstrap/js/bootstrap.min',
 		nprogress: 'assets/nprogress/nprogress',
 		cookie: 'assets/jquery-cookie/jquery.cookie',
+		template: 'assets/artTemplate/template',
 
 		common: 'js/common'
+	},
+	shim: {
+		// 因为 bootstrap 需要依赖与jQuery才能使用，所以，需要配置依赖项
+		bootstrap: {
+			deps: ['jquery']
+		}
 	}
 });
 
