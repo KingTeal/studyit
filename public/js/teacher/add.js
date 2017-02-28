@@ -1,5 +1,6 @@
-define(['jquery', 'template', 'utils', 'datelanguage', 'form'], function($, template, utils) {
-
+define(['jquery', 'template', 'utils', 'datelanguage', 'form', 'validate'], function($, template, utils) {
+	
+	// 左侧菜单高亮
 	utils.setMenuClass('/teacher/list');
 	
 	// 根据url中有没有 tc_id 参数来确定是编辑还是添加！
@@ -11,8 +12,77 @@ define(['jquery', 'template', 'utils', 'datelanguage', 'form'], function($, temp
 	   if (r!=null) return (r[2]); return null;
 	}
 
+	// 表单验证，并提交
+	var validateTeacher = function() {
+		var $form = $('#teacher_edit').find('form')
+
+		$form.validate({
+			onKeyup: true,
+	  	// 阻止表单默认的提交方式，改用ajax的方式提交！
+	  	sendForm: false,
+	  	
+	    eachInvalidField: function() {
+	    	// 验证失败
+	      $(this).parent().parent().addClass('has-error').removeClass('has-success')
+	    },
+
+	    eachValidField: function() {
+	    	// 验证成功
+	    	$(this).parent().parent().addClass('has-success').removeClass('has-error')
+	    },
+
+	    valid: function() {
+	    	// console.log('成功！');
+	    	// 验证成功，会执行这个 valid 回调函数的中的代码
+	    	if(id) {
+					// 编辑
+					$form.ajaxSubmit({
+						url: '/api/teacher/update',
+						type: 'post',
+						// 因为表单中没有表示id的元素，所以，需要单独添加一个
+						// tc_id 参数！！！
+						// data: {tc_id: id}, 
+						success: function( data ) {
+							if( data.code === 200 ) {
+								// console.log(data)
+								alert('修改成功！');
+							}
+						}
+					})
+				} else {
+					// 添加
+					$form.ajaxSubmit({
+						url: '/api/teacher/add',
+						type: 'post',
+						success: function( data ) {
+							// console.log(data);
+							if(data.code === 200) {
+								location.href = '/teacher/list';
+							}
+						}
+					})
+				}
+
+	    },
+
+	    description: {
+	    	tcNameDesc: {
+	    		required: '用户名为必填项'
+	    	},
+	    	tcPassDesc: {
+	    		required: '请输入密码'
+	    	},
+	    	tcJoinDateDesc: {
+	    		required: '请选择入职日期'
+	    	}
+	    }
+		});
+	};
+
+	// 获取用户id
 	var id = getParam('tc_id');
 
+	// 根据用户id判断是编辑还是添加
 	if(id) {
 		// 有id参数，此时，就是编辑！
 		// 此时，需要根据id获取到讲师的信息
@@ -30,6 +100,9 @@ define(['jquery', 'template', 'utils', 'datelanguage', 'form'], function($, temp
 				
 				var html = template('teacher_edit_tpl', data.result);
 				$('#teacher_edit').html( html );
+
+				// 表单验证
+				validateTeacher();
 			}
 		});
 	} else {
@@ -41,42 +114,13 @@ define(['jquery', 'template', 'utils', 'datelanguage', 'form'], function($, temp
 			btnTxt: '添 加'
 		});
 		$('#teacher_edit').html( html );
+
+		// 表单验证
+		validateTeacher();
 	}
 	
-	// 因为form是根据模板动态生成的，所以，如果要绑定事件，是需要通过委托的方式
-	// 通过父元素绑定事件，才可以！
-	$('#teacher_edit').on('submit', 'form', function() {
-		var $this = $(this);
-		
-		if(id) {
-			// 编辑
-			$this.ajaxSubmit({
-				url: '/api/teacher/update',
-				type: 'post',
-				// 因为表单中没有表示id的元素，所以，需要单独添加一个
-				// tc_id 参数！！！
-				// data: {tc_id: id}, 
-				success: function( data ) {
-					if( data.code === 200 ) {
-						// console.log(data)
-						alert('修改成功！');
-					}
-				}
-			})
-		} else {
-			// 添加
-			$this.ajaxSubmit({
-				url: '/api/teacher/add',
-				type: 'post',
-				success: function( data ) {
-					// console.log(data);
-					if(data.code === 200) {
-						location.href = '/teacher/list';
-					}
-				}
-			})
-		}
+	// 因为编辑页面是通过 ajax 请求获取数据再渲染到页面中的，所以，如果直接获取
+	// form是获取不到的！
+	// console.log( $('#teacher_edit').find('form') );
 
-		return false;
-	});
 });
