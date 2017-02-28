@@ -23,7 +23,11 @@ define(['jquery', 'template', 'nprogress', 'cookie'], function($, template, npro
   var userInfoTpl = 
     '<!-- 头像 -->' +
     '<div class="avatar img-circle">' +
+      '{{if tc_avatar}}' +
       '<img src="{{ tc_avatar }}">' +
+      '{{else}}' +
+      '<img src="/public/images/default.png">' +
+      '{{/if}}' +
     '</div>' +
     '<h4>{{ tc_name }}</h4>';
 
@@ -52,7 +56,7 @@ define(['jquery', 'template', 'nprogress', 'cookie'], function($, template, npro
       }
     });
   });
-
+  
   // 进度条
   nprogress.start();
   nprogress.done();
