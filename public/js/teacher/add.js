@@ -1,4 +1,4 @@
-define(['jquery', 'template', 'utils'], function($, template, utils) {
+define(['jquery', 'template', 'utils', 'datelanguage', 'form'], function($, template, utils) {
 
 	utils.setMenuClass('/teacher/list');
 	
@@ -42,5 +42,41 @@ define(['jquery', 'template', 'utils'], function($, template, utils) {
 		});
 		$('#teacher_edit').html( html );
 	}
+	
+	// 因为form是根据模板动态生成的，所以，如果要绑定事件，是需要通过委托的方式
+	// 通过父元素绑定事件，才可以！
+	$('#teacher_edit').on('submit', 'form', function() {
+		var $this = $(this);
+		
+		if(id) {
+			// 编辑
+			$this.ajaxSubmit({
+				url: '/api/teacher/update',
+				type: 'post',
+				// 因为表单中没有表示id的元素，所以，需要单独添加一个
+				// tc_id 参数！！！
+				// data: {tc_id: id}, 
+				success: function( data ) {
+					if( data.code === 200 ) {
+						// console.log(data)
+						alert('修改成功！');
+					}
+				}
+			})
+		} else {
+			// 添加
+			$this.ajaxSubmit({
+				url: '/api/teacher/add',
+				type: 'post',
+				success: function( data ) {
+					// console.log(data);
+					if(data.code === 200) {
+						location.href = '/teacher/list';
+					}
+				}
+			})
+		}
 
+		return false;
+	});
 });

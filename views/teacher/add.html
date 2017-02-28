@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>学IT - 后台管理系统</title>
     <?php include '/views/common/style.html'?>
+    <link rel="stylesheet" type="text/css" href="/public/assets/bootstrap-datepicker/css/bootstrap-datepicker3.css">
 </head>
 <body>
     
@@ -33,30 +34,46 @@
         </ol>
         <div class="teacher-add">
             <form action="" class="form-horizontal col-md-offset-2">
+                <!-- 隐藏域，这个元素是一个表单元素，并且在页面中是看不到的！
+                    一般会用来存储用户id等不需要用户看到，但是，还是要提交到后台的数据！
+                 -->
+                <input type="hidden" name="tc_id" value="{{tc_id}}">
                 <div class="form-group">
                     <label for="" class="col-md-3 control-label">姓名</label>
                     <div class="col-md-4">
-                        <input type="text" class="form-control input-sm" placeholder="讲师名称" value="{{tc_name}}">
+                        <input type="text" class="form-control input-sm" placeholder="讲师名称" value="{{tc_name}}" data-required name="tc_name"
+                        data-description="tcNameDesc" data-describedby="tc_name_desc"
+                        >
                     </div>
+                    <p class="help-block" id="tc_name_desc"></p>
                 </div>
                 {{ if title === '讲师添加' }}
                 <div class="form-group">
                     <label for="" class="col-md-3 control-label">密码</label>
                     <div class="col-md-4">
-                        <input type="password" class="form-control input-sm">
+                        <input type="password" data-required class="form-control input-sm" name="tc_pass"
+                        data-description="tcPassDesc" data-describedby="tc_pass_desc"
+                        >
                     </div>
+                    <p class="help-block" id="tc_pass_desc"></p>
                 </div>
                 {{ /if }}
                 <div class="form-group">
                     <label for="" class="col-md-3 control-label">入职时间</label>
                     <div class="col-md-4">
-                        <input type="text" class="form-control input-sm" value="{{tc_join_date}}">
+                        <input type="text" class="form-control input-sm" value="{{tc_join_date}}"
+                        data-provide="datepicker"
+                        data-date-format="yyyy-mm-dd"
+                        data-date-end-date="0d"
+                        data-date-language="zh-CN" name="tc_join_date" data-required
+                        data-description="tcJoinDateDesc" data-describedby="tc_join_date_desc">
                     </div>
+                    <p class="help-block" id="tc_join_date_desc"></p>
                 </div>
                 <div class="form-group">
                     <label for="" class="col-md-3 control-label">类型</label>
                     <div class="col-md-2">
-                        <select name="" class="form-control input-sm">
+                        <select class="form-control input-sm" name="tc_type">
                             <!-- 0 管理员、1 讲师 -->
                             <option value="1" {{ if tc_type === '1'}} selected {{/if}}>讲师</option>
                             <option value="0" {{ if tc_type === '0'}} selected {{/if}}>管理员</option>
@@ -67,21 +84,22 @@
                     <label for="" class="col-md-3 control-label">性别</label>
                     <div class="col-md-4">
                         <label class="radio-inline">
-                            <input type="radio" name="tc_gender" {{if tc_gender === '1'}} checked {{ /if }}> 女
+                            <input type="radio" name="tc_gender" {{if tc_gender === '1'}} checked {{ /if }} value="1"> 女
                         </label>
                         <label class="radio-inline">
-                            <input type="radio" name="tc_gender" {{if tc_gender === '0'}} checked {{ /if }}> 男
+                            <input type="radio" name="tc_gender" {{if tc_gender === '0'}} checked {{ /if }} value="0"> 男
                         </label>
                     </div>
                 </div>
                 <div class="form-group">
                     <div class="col-md-7">
-                        <input type="submit" class="btn btn-success btn-sm pull-right" value="{{btnTxt}}">
-                    </div>                          
+                        <input type="submit" class="btn btn-success btn-sm pull-right" value="{{btnTxt}}" id="btnTeacherSubmit">
+                    </div>
                 </div>
             </form>
         </div>
     </script>
+
     <script>
         require(['js/teacher/add'])
     </script>

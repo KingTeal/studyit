@@ -6,6 +6,9 @@ require.config({
 		nprogress: 'assets/nprogress/nprogress',
 		cookie: 'assets/jquery-cookie/jquery.cookie',
 		template: 'assets/artTemplate/template',
+		datepicker: 'assets/bootstrap-datepicker/js/bootstrap-datepicker',
+		datelanguage: 'assets/bootstrap-datepicker/locales/bootstrap-datepicker.zh-CN.min',
+		form: 'assets/jquery-form/jquery.form',
 
 		common: 'js/common',
 		utils: 'js/utils'
@@ -14,6 +17,9 @@ require.config({
 		// 因为 bootstrap 需要依赖与jQuery才能使用，所以，需要配置依赖项
 		bootstrap: {
 			deps: ['jquery']
+		},
+		datelanguage: {
+			deps: ['datepicker']
 		},
 		utils: {
 			deps: ['jquery']
