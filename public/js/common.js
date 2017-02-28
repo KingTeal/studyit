@@ -74,6 +74,13 @@ define(['jquery', 'template', 'nprogress', 'cookie'], function($, template, npro
       }, 200);
     });
 
+
+  // 菜单展开
+  $('.childMenu').on('click', function() {
+    $(this).next('ul').slideToggle();
+    $(this).children('.arrow').toggleClass('fa-angle-down');
+  });
+
   /*// 因为每一个页面中都需要用到该方法，所以，需要创建一个工具模块
   // 这个模块中，用来存放所有页面共用的一些方法！
   // 左侧菜单的高亮处理
