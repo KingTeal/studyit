@@ -49,7 +49,7 @@ define(['jquery', 'template', 'utils', 'bootstrap'], function($, template, utils
 		// 思路:
 		// 如果当前状态是开启(0)的,那么点击后,就变为注销(1)
 		// 如果当前状态是注销(1)的,那么点击后,就变为开启(0)
-
+		
 		var $this = $(this);
 		// 0表示启用
 		// 1表示注销

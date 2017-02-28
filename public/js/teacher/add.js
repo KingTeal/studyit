@@ -1,7 +1,7 @@
 define(['jquery', 'template', 'utils'], function($, template, utils) {
 
 	utils.setMenuClass('/teacher/list');
-
+	
 	// 根据url中有没有 tc_id 参数来确定是编辑还是添加！
 	// 怎么获取到 url 中的参数？？？
 	// console.log(location)
@@ -27,7 +27,7 @@ define(['jquery', 'template', 'utils'], function($, template, utils) {
 				// 因为页面结构就是根据 数据的值 来渲染的！
 				data.result.title = '讲师编辑';
 				data.result.btnTxt = '修 改';
-
+				
 				var html = template('teacher_edit_tpl', data.result);
 				$('#teacher_edit').html( html );
 			}
