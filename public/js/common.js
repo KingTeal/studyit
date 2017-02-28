@@ -1,5 +1,5 @@
 // 1 创建模块
-define(['jquery', 'template', 'cookie'], function($, template) {
+define(['jquery', 'template', 'nprogress', 'cookie'], function($, template, nprogress) {
 	// 为了避免 以下代码出问题, 做以下修改!
 	// 因为以下所有的操作, 与登录页面是没有关系的! 
 	// 所以, 如果是登录页面, 就不执行判断以后的代码了!
@@ -52,6 +52,23 @@ define(['jquery', 'template', 'cookie'], function($, template) {
       }
     });
   });
+
+  // 进度条
+  nprogress.start();
+  nprogress.done();
+
+  // ajax 的全局设置
+  $(document)
+    .ajaxStart(function() {
+      // 开始发送请求
+      $('.mask').show();
+    })
+    .ajaxStop(function() {
+      // 请求结束
+      setTimeout(function() {
+        $('.mask').hide();
+      }, 200);
+    });
 
   /*// 因为每一个页面中都需要用到该方法，所以，需要创建一个工具模块
   // 这个模块中，用来存放所有页面共用的一些方法！

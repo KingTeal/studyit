@@ -64,7 +64,7 @@ define(['jquery', 'template', 'utils', 'datelanguage', 'form', 'validate'], func
 				}
 
 	    },
-
+	    
 	    description: {
 	    	tcNameDesc: {
 	    		required: '用户名为必填项'
@@ -78,7 +78,7 @@ define(['jquery', 'template', 'utils', 'datelanguage', 'form', 'validate'], func
 	    }
 		});
 	};
-
+	
 	// 获取用户id
 	var id = getParam('tc_id');
 
