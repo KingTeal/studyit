@@ -10,10 +10,13 @@ require.config({
 		datelanguage: 'assets/bootstrap-datepicker/locales/bootstrap-datepicker.zh-CN.min',
 		form: 'assets/jquery-form/jquery.form',
 		validate: 'assets/jquery-validate/jquery-validate.min',
+		uploadify: 'assets/uploadify/jquery.uploadify',
+		ckeditor: 'assets/ckeditor/ckeditor',
 
 		common: 'js/common',
 		utils: 'js/utils'
 	},
+	
 	shim: {
 		// 因为 bootstrap 需要依赖与jQuery才能使用，所以，需要配置依赖项
 		bootstrap: {
@@ -25,11 +28,25 @@ require.config({
 		validate: {
 			deps: ['jquery']
 		},
+		uploadify: {
+			deps: ['jquery']
+		},
+		ckeditor: {
+			// 因为 ckeditor 本身是不支持模块化功能(AMD规范)的
+			// 因此,需要我们自己配置 exports
+			// 又因为平时在使用的时候,是这种使用方式: CKEDITOR.replace('txt'.replace('txt')
+			// 所以, 此处, 暴露 CKEDITOR !!!
+			exports: 'CKEDITOR'
+		},
 		utils: {
 			deps: ['jquery']
 		}
 	}
 });
+
+// 因为当前 js 在每一个页面中都会引入的! 所以,我们可以将原来引入 common.js 的操作
+// 放到 这个文件中完成!
+require(['common']);
 
 // 因为当前 js 在每一个页面中都会引入的! 所以,我们可以将原来引入 common.js 的操作
 // 放到 这个文件中完成!
