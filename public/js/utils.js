@@ -8,6 +8,11 @@ define(['jquery'], function($) {
 	    $aLink.addClass('active');
 	    // 将其兄弟元素移除样式
 	    $aLink.parent().siblings().children('a').removeClass('active')
-	  }
+	  },
+	    getParam: function (name) {
+	   var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)","i");
+	   var r = window.location.search.substr(1).match(reg);
+	   if (r!=null) return (r[2]); return null;
+	 }
 	};
 });

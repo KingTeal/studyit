@@ -20,6 +20,10 @@ define(['jquery', 'template', 'ckeditor', 'uploadify', 'cookie','datelanguage','
 			var html = template('user_settings_tpl', data.result);
 			$('#user_settings').html( html );
 
+			//  省市区县选择
+			$('#pcd').region({
+				url: '/public/assets/jquery-region/region.json'
+			});
 			// 因为要获取的元素是通过 ajax+template 渲染出来的，所以，需要等到页面
 			// 渲染之后，才能够调用！！！
 			// 头像上传
@@ -28,7 +32,7 @@ define(['jquery', 'template', 'ckeditor', 'uploadify', 'cookie','datelanguage','
 				// 与服务器约定好的上传文件的名称，服务器就是根据这个名称来获取到用户上传的文件
 				fileObjName: 'tc_avatar',
 				uploader: '/api/uploader/avatar',
-				fileTypeExts: '*.gif; *.jpg; *.png; *.bmp',
+				fileTypeExts: '*.gif; *.jpg; *.png',
 				fileSizeLimit : '1MB',
 				buttonText: '',
 				height: 120,
@@ -45,13 +49,13 @@ define(['jquery', 'template', 'ckeditor', 'uploadify', 'cookie','datelanguage','
 		    	// 1 需要修改cookie中头像的值
 		    	// 2 把头像img的src修改为当前头像
 		    	
-		    	var userinfo = $.cookie('#userinfo');
+		    	var userinfo = $.cookie('userinfo');
 		    	var userinfoObj = JSON.parse( userinfo );
 		    	userinfoObj.tc_avatar = ret.result.path;
 		    	$.cookie('userinfo', JSON.stringify(userinfoObj));
 
 		    	// 修改头像的地址
-		    	$('.preview').children('img').attr('src' , ret.result.path);
+		    	$('#userinfo').find('img').attr('src' , ret.result.path);
 		    }
 			});
 			
@@ -60,10 +64,8 @@ define(['jquery', 'template', 'ckeditor', 'uploadify', 'cookie','datelanguage','
 		}
 	});
 
-	$('#pcd').region({
-		url: '/public/assets/jquery-region/region.json'
-	})
-	$('user_settings').on('submit','form',function () {
+	
+	$('#user_settings').on('submit','form',function () {
 		var p = $('#tc_province').children(':selected').text();
 		var c = $('#tc_city').children(':selected').text();
 		var d = $('#tc_district').children(':selected').text();
