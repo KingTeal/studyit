@@ -1,4 +1,4 @@
-define(['jquery', 'template', 'ckeditor', 'uploadify', 'cookie'], function($, template, CKEDITOR) {
+define(['jquery', 'template', 'ckeditor', 'uploadify', 'cookie','datelanguage','region', 'form'], function($, template, CKEDITOR) {
 	// 实现功能的思路：
 	// 1 查看文档，找到查看 个人中心 对应的接口
 	// 2 拿到接口，并发送 ajax 请求，获取数据
@@ -59,4 +59,26 @@ define(['jquery', 'template', 'ckeditor', 'uploadify', 'cookie'], function($, te
 			CKEDITOR.replace( 'tc_introduce' );
 		}
 	});
+
+	$('#pcd').region({
+		url: '/public/assets/jquery-region/region.json'
+	})
+	$('user_settings').on('submit','form',function () {
+		var p = $('#tc_province').children(':selected').text();
+		var c = $('#tc_city').children(':selected').text();
+		var d = $('#tc_district').children(':selected').text();
+
+		$(this).ajaxSubmit({
+			url: '/api/teacher/modify',
+			type:'post',
+			data: {
+				tc_hometown: p + '|' + c + '|' + d 
+			},
+			success: function (data) {
+				console.log(data);
+			}
+		})
+		return false;
+	})
+
 });

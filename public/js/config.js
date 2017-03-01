@@ -12,6 +12,7 @@ require.config({
 		validate: 'assets/jquery-validate/jquery-validate.min',
 		uploadify: 'assets/uploadify/jquery.uploadify',
 		ckeditor: 'assets/ckeditor/ckeditor',
+		region : 'assets/jquery-region/jquery.region',
 
 		common: 'js/common',
 		utils: 'js/utils'
@@ -24,6 +25,10 @@ require.config({
 		},
 		datelanguage: {
 			deps: ['datepicker']
+		},
+
+		region: {
+			deps: ['jquery']
 		},
 		validate: {
 			deps: ['jquery']
